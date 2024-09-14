@@ -2,6 +2,8 @@ local CoreGui = game:GetService("CoreGui")
 local UserInput = game:GetService("UserInputService")
 local HttpService = game:GetService("HttpService")
 
+print("Started Loading UI...")
+
 local Interface = import("rbxassetid://11389137937")
 
 if oh.Cache["ui/main"] then
@@ -37,6 +39,8 @@ end, function(err)
 		Interface:Destroy() 
 	end)
 end)
+
+print("Loaded Scanners...")
 
 local constants = {
 	opened = UDim2.new(0.5, -325, 0.5, -175),
@@ -107,5 +111,7 @@ else
 
 	Interface.Parent = CoreGui
 end
+
+print("Loaded UI!")
 
 return Interface
