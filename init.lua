@@ -182,7 +182,11 @@ if getConnections then
     end
 end
 
+print("Loaded Global Methods...")
+
 useMethods(globalMethods)
+
+print("Ran Global Methods...")
 
 local HttpService = game:GetService("HttpService")
 local releaseInfo = HttpService:JSONDecode(game:HttpGetAsync("https://api.github.com/repos/" .. user .. "/HOPlus/releases"))[1]
@@ -284,6 +288,8 @@ if readFile and writeFile then
 
     useMethods({ import = environment.import })
 end
+
+print("Created Folders...")
 
 useMethods(import("methods/string"))
 useMethods(import("methods/table"))
