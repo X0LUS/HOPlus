@@ -197,9 +197,13 @@ function Log.new(localScript)
             end
 
             -- script decompilation here
+            print(scriptInstance)
+            print(type(scriptInstance))
+            print(typeof(scriptInstance))
+
             if decompile then
                 local Text = Instance.new("TextBox" ,InfoSource)
-                Text.Text = decompile(localScript.Instance)
+                Text.Text = decompile(scriptInstance)
                 Text.Size = UDim2.new(1,0,1,0)
             end  
 
