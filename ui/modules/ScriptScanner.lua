@@ -38,6 +38,14 @@ local EnvironmentResultsClip = InfoEnvironment.Results.Clip
 local EnvironmentResultsStatus = EnvironmentResultsClip.ResultStatus
 local EnvironmentResults = EnvironmentResultsClip.Content
 
+local SFrame = Instance.new("ScrollingFrame", InfoSource)
+SFrame.Name = "DecompileList"
+SFrame.Size = UDim2.new(1,0,1,0)
+SFrame.ScrollBarThickness = 5
+SFrame.BackgroundTransparency = 1
+SFrame.ZIndex = 999
+SFrame.AutomaticCanvasSize = Enum.AutomaticSize.None
+
 local ConstantsQuery = InfoConstants.Query
 local ConstantsResultsClip = InfoConstants.Results.Clip
 local ConstantsResultsStatus = ConstantsResultsClip.ResultStatus
@@ -175,6 +183,10 @@ function Log.new(localScript)
             constantsList:Clear()
             environmentList:Clear()
             
+            for i,v in SFrame:GetChildren() do
+                v.Visible = false
+            end
+            
             
             ScriptList.Visible = false
             ScriptInfo.Visible = true
@@ -204,9 +216,14 @@ function Log.new(localScript)
             print(typeof(scriptInstance))
 
             if decompile then
-                local Text = Instance.new("TextBox" ,InfoSource)
+                local Text = Instance.new("TextLabel", SFrame)
                 Text.Text = decompile(scriptInstance)
                 Text.Size = UDim2.new(1,0,1,0)
+                Text.ZIndex = 999
+                Text.TextXAlignment = Enum.TextXAlignment.Left
+                Text.TextYAlignment = Enum.TextYAlignment.Top
+                Text.BackgroundTransparency = 1
+                Text.TextColor3 = Color3.new(0.650980, 0.752941, 0.839215)
             end
 
             selected.scriptLog = log
