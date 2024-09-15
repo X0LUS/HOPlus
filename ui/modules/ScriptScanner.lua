@@ -51,6 +51,7 @@ local ProtosResults = ProtosResultsClip.Content
 local scriptList = List.new(ListResults)
 local protosList = List.new(ProtosResults)
 local constantsList = List.new(ConstantsResults)
+local environmentList = List.new(EnvironmentResults)
 
 local scriptLogs = {}
 local selected = {}
@@ -124,6 +125,35 @@ local function createConstant(index, value)
     ListButton.new(instance, constantsList)
 end
 
+local function createEnvironment(index, value)
+    local instance = Assets.ConstantPod:Clone()
+    local information = instance.Information
+    local valueType = type(value)
+    local indexWidth = TextService:GetTextSize(index, 18, "SourceSans", constants.textWidth).X + 8    
+
+    information.Index.Text = index
+
+    information.Index.Size = UDim2.new(0, indexWidth, 0, 20)
+    information.Label.Size = UDim2.new(1, -(indexWidth + 20), 1, 0)
+    information.Icon.Position = UDim2.new(0, indexWidth, 0, 2)
+    information.Label.Position = UDim2.new(0, indexWidth + 20, 0, 0)
+
+    if valueType == "function" then
+        local functionName = getInfo(value).name or ''
+
+        if functionName == '' then
+            functionName = "Unnamed function"
+            information.Label.TextColor3 = oh.Constants.Syntax["unnamed_function"]
+        end
+        
+        information.Label.Text = functionName
+    else
+        information.Label.Text = toString(value)
+    end
+    
+    ListButton.new(instance, environmentList)
+end
+
 -- Log Object
 local Log = {}
 
@@ -162,11 +192,16 @@ function Log.new(localScript)
                 createConstant(i, v)
             end
 
-            -- for i,v in pairs(localScript.Environment) do
-            --     createEnvironment(i, v)
-            -- end
+            for i,v in pairs(localScript.Environment) do
+                createEnvironment(i, v)
+            end
 
             -- script decompilation here
+            if decompile then
+                local Text = Instance.new("TextBox" ,InfoSource)
+                Text.Text = decompile(localScript)
+                Text.Size = UDim2.new(1,0,1,0)
+            end  
 
             selected.scriptLog = log
         end
