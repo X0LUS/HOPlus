@@ -173,6 +173,8 @@ function Log.new(localScript)
         if selected.scriptLog ~= log then
             protosList:Clear()
             constantsList:Clear()
+            environmentList:Clear()
+            
             
             ScriptList.Visible = false
             ScriptInfo.Visible = true
@@ -205,7 +207,7 @@ function Log.new(localScript)
                 local Text = Instance.new("TextBox" ,InfoSource)
                 Text.Text = decompile(scriptInstance)
                 Text.Size = UDim2.new(1,0,1,0)
-            end  
+            end
 
             selected.scriptLog = log
         end
