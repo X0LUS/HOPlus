@@ -64,7 +64,8 @@ nmcTrampoline = hookMetaMethod(game, "__namecall", newcclosure(function(...)
         method = "InvokeServer"
     end
         
-    if remotesViewing[rawget(instance, "ClassName")] and instance ~= remoteDataEvent and remoteMethods[method] then
+    --TODO: find way to patch __index without rawget
+    if remotesViewing[instance["ClassName"]] and instance ~= remoteDataEvent and remoteMethods[method] then
         local remote = currentRemotes[instance]
         local vargs = {select(2, ...)}
             
